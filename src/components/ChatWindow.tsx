@@ -15,7 +15,7 @@ interface ChatWindowProps {
 const ChatWindow: React.FC<ChatWindowProps> = ({ styles, messages, onSendMessage }) => {
   return (
     <div
-      className={`flex flex-col rounded-lg h-[500px] mx-auto border ${styles.lightMode ? 'shadow-2xl border-black' : 'shadow-none border-white'}`}
+      className={`flex flex-col sticky top-5 rounded-lg h-[500px] mx-auto border ${styles.lightMode ? 'shadow-2xl border-black' : 'shadow-none border-white'}`}
       style={{
         width: `${styles.widgetWidth}px`,
         borderRadius: `${styles.cornerRadius}px`,

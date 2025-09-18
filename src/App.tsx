@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import ChatWindow from './components/ChatWindow';
 import StyleConfigPanel from './components/StyleConfigPanel';
 import type { Styles, Message } from './types';
-import AppHeader from './components/AppHeader';
 
 const App: React.FC = () => {
   const [styles, setStyles] = useState<Styles>({
@@ -37,8 +36,6 @@ const App: React.FC = () => {
 
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const [activeView, setActiveView] = useState<'chat' | 'style'>('chat');
-
   const handleStyleChange = useCallback((style: keyof Styles, value: any) => {
     setStyles(prevStyles => {
       const newStyles = { ...prevStyles };
@@ -68,22 +65,20 @@ const App: React.FC = () => {
 
   return (
     <div className={`min-h-screen font-sans ${styles.lightMode ? 'bg-gray-100' : 'bg-gray-900 text-white'}`}>
-      <AppHeader activeView={activeView} setActiveView={setActiveView} styles={styles} />
-      <main className="container mx-auto p-4">
-        {activeView === 'chat' ? (
-          <div className="flex justify-center items-start">
-            <ChatWindow
-              styles={styles}
-              messages={messages}
-              onSendMessage={handleSendMessage}
+      <main className="container mx-auto p-4 flex flex-col md:flex-row gap-4">
+        <div className="md:w-1/2">
+            <StyleConfigPanel
+                styles={styles}
+                onStyleChange={handleStyleChange}
             />
-          </div>
-        ) : (
-          <StyleConfigPanel
-            styles={styles}
-            onStyleChange={handleStyleChange}
-          />
-        )}
+        </div>
+        <div className="md:w-1/2 flex justify-center items-start">
+            <ChatWindow
+                styles={styles}
+                messages={messages}
+                onSendMessage={handleSendMessage}
+            />
+        </div>
       </main>
     </div>
   );
